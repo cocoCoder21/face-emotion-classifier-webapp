@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IndentiFeel</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../static/img/faces.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="static/css/my_styles.css">
+     <script type="text/javascript" src="https://unpkg.com/webcam-easy@1.0.5/dist/webcam-easy.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+      <!-------------------------- Inline CSS --------------------------------->
+    <style>
+        .img-responsive{
+            height: 80vh !important;
+        }
+        .badge-light{
+            font-size: 10px;
+        }
+        .logo{
+            width: 8% !important;
+        }
+    </style>
+</head>
+
+<body>
+  <!-------------------------- Navigation Bar --------------------------------->
+    <nav class="navbar ">
+      <div class="container-fluid">
+        <a class="navbar-brand nav-font" href="#">
+          <img src="static/images/indentiFeel-logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+          IdentiFeel
+        </a>
+      </div>
+    </nav>
+
+    <!----------------------------- Mini Navigation Bar --------------------------------->
+    <div class="container">
+
+        <div class="row header-div shadow">
+            <div class="remove-padding">
+
+                <nav class="navbar navbar-expand-lg bg-light">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="#first">IndentiFeel</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-front2 nav-link navbar navbar-expand-lg bg-light" aria-current="page" href="#second">Predict Emotion</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+            </div>
+
+            <!-------------------------- The landing Page - Description of the Website --------------------------------->
+            <div class="header-padding" id="first">
+                <div class="spotlight">
+									<div>
+										<header>
+											<h2>IndentiFeel: Face Emotion Classifier</h2>
+										</header>
+										<p class="subheader-font"> IndentiFeel will help you identify the emotions projected in an image. This is truly beneficial for the people like you who wanted to determine different emotions. Use IdentiFeel to let you know what you feel!</p>
+										<a href="#second"><button type="submit" class="btn btn-warning text-light upload-btn"> Predict Emotion </button></a>
+
+									</div>
+									<span class="image"><img src="static/images/emoticons.png" alt="" /></span>
+								</div>
+
+                <header>
+									<h2 class="subheader-font title-font">Classifying Emotions</h2>
+									<p class="subheader-font"> IdentiFeel can able to determine different emotions such as happy, sad, angry, neutral, fear, disgust or surprise. It is also easy to use!</p>
+								</header>
+								<ul class="statistics subheader-font">
+									<li class="style1">
+										<span class="image"><img src="static/images/happy.png" alt="" /></span>
+										<strong>Happy</strong>
+									</li>
+									<li class="style2">
+										<span class="image"><img src="static/images/sad.png" alt="" /></span>
+										<strong>Sad</strong>
+									</li>
+									<li class="style3">
+										<span class="image"><img src="static/images/angry.png" alt="" /></span>
+										<strong>Angry</strong>
+									</li>
+									<li class="style4">
+										<span class="image"><img src="static/images/neutral.png" alt="" /></span>
+										<strong>Neutral</strong>
+									</li>
+									<li class="style5">
+										<span class="image"><img src="static/images/afraid.png" alt="" /></span>
+										<strong>Fear</strong>
+									</li>
+								</ul>
+								<p class="subheader-font">Facial Emotion Recognition (FER) is the technology that analyses facial expressions from both static images and videos in order to reveal information on one's emotional state. Examining a person's face, unless they actively suppress their expressions, can be one method of effectively discerning their genuine mood and reactions. Because of the universality of these expressions, facial emotion recognition is a task that computers can also perform.</p>
+            </div>
+
+        </div>
+
+  <!-------------------------- Upload Image frame --------------------------------->
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-sm-12  shadow upload-img">
+                <div class="row">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 header-padding">
+                        <form class="form" action="/fetch_upload" method="POST"  enctype="multipart/form-data">
+                            <div class="form-group">
+                                 <div class="input-group">
+                                    <input type="file" name="img-file" class="form-control upload-input">
+                                    <button type="submit" class="btn btn-warning text-light upload-btn">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+  <!-------------------------- Displaying & Processing of the Image prediction --------------------------------->
+            {% if is_uploaded==False: %}
+                     <div class="col-md-6 col-sm-12 col-sm-12  shadow upload-img" id="second">
+                <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <h4 class="instruct-font mt-5 just-add-padding">Face Emotion Classifier</h4>
+                            </div>
+                             <div class="col-md-12 col-sm-12 col-xs-12 Sed lorem ipsum dolor sit amet nullam consequat feugiat consequat magna adipiscin  instruct-font">
+                                <p class="instruct-font">❧ The image that will upload must be 500x500 pixels or higher</p>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 instruct-font">
+                                <p class="instruct-font">❧ It must be a valid image file.</p>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 instruct-font">
+                                <p class="instruct-font">❧ ️The image must contain human face/s else the predictor will return None.</p>
+                            </div>
+                             <div class="col-md-12 col-sm-12 col-xs-12 instruct-font">
+                                <p class="instruct-font">❧ The size of the image must be less than 1mb.</p>
+                            </div>
+                            {% if is_error==True: %}
+                                <div class="col-md-12 col-sm-12 col-xs-12 instruct-font">
+                                    <div class="alert alert-warning" role="alert">
+                                        {{ is_error_msg }}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        </div>
+            </div>
+
+            {% else: %}
+                {% if is_predicted==False: %}
+                    <div class="col-md-6 col-sm-12 col-sm-12 upload-img">
+                         <form class="form" action="/predict_capture" method="POST"  enctype="multipart/form-data">
+                            <div class="row">
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <img src="data:image/jpg;base64,{{ img_display }}" id="img_predictor" class="img-fluid mx-auto d-block"
+                                    >
+                                    <input type="hidden" name="img_predict_name" value="{{img_path}}"/>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 mt-3">
+                                    <b>Image Filename:</b> <span>{{img_filename}}</span>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 mt-3">
+                                    <b>Image Size:</b> <span id="img_predictor_size">{{img_size}}bytes</span>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12 mt-3">
+                                    <b>Width:</b> <span>{{img_width}}</span>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12 mt-3">
+                                    <b>Height:</b> <span>{{img_height}}</span>
+                                </div>
+                                 <div class="col-md-6 col-sm-12 col-xs-12 mt-3">
+        <!--                             <input type="hidden" value="{{img_id}}" id="imgID"/>-->
+                                    <a href="/" class="btn btn-secondary w-100">Change Image</a><!--ChangeIMG ID-->
+                                </div>
+                                {% if img_upload_isvalid==True: %}
+                                 <div class="col-md-6 col-sm-12 col-xs-12 mt-3">
+                                    <button type="submit" class="btn btn-primary w-100 predict-btn">Predict Image</button><!--PredictIMG ID-->
+                                </div>
+                                {% else: %}
+                                <div class="col-md-6 col-sm-12 col-xs-12 mt-3">
+                                    <a href="/"  class="btn btn-warning text-white w-100">File too small</a><!--PredictIMG ID-->
+                                </div>
+                                {% endif%}
+
+                            </div>
+                        </form>
+                    </div>
+                {% else: %}
+                    <div class="col-md-6 col-sm-12 col-sm-12 upload-img">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 mt-3">
+                                <label><strong>Predicted Face/s with classified Emotion of the Person/s.</strong></label>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                 <img src="data:image/jpg;base64,{{ predicted_image }}"  class="img-fluid mx-auto d-block">
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+<!------------------------------- CAMERA FUNCTIONALITY ----------------------------------->
+<!--            <div>-->
+<!--              <video id="webCam" autoplay playsinline width="800" height="580"></video>-->
+<!--              <canvas id="canvas"></canvas>-->
+<!--              <body onLoad="startPrediction();"></body>-->
+<!--              <button type="submit"  formaction="/fetch_upload">Click! </button>-->
+<!--            </div>-->
+            <div class="shadow upload-img" style="padding: 20px 10px 30px 10px;">
+                <video id="video" width="520" height="440" autoplay></video>
+                <button id="start-camera" class="btn btn-warning text-light add-top-padding upload-btn">Start Camera </button>
+                <canvas id="canvas" width="920" height="840"></canvas>
+                <button id="click-photo" class="btn btn-warning text-light  header-padding upload-btn"> Click & Save </button>
+            </div>
+
+        </div>
+
+        {% if is_predicted==True: %}
+        <hr>
+
+
+<!----------------------------- RESULT OF THE PREDICTION --------------------------------->
+
+        <div class="row mt-5 result-div shadow">
+             <span style="font-size:20px;">Classified Emotion of the Face/s</span>
+             {% for data in list_emotions: %}
+
+                <div class="col-md-12 col-sm-12 col-xs-12 mt-3">
+                    <div class="alert alert-primary percentage_box" role="alert">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-12 col-xs-12 mb-3">
+                                 <img src="data:image/jpg;base64,{{ data['face-img'] }}"  class="img-fluid mx-auto d-block">
+                            </div>
+                            <div class="col-md-5 col-sm-12 col-xs-12">
+                                <div class="alert alert-success mt-4" role="alert">
+                                    --The face from this image has the accuracy of
+                                      <b>{{data['face-prediction']['accuracy']}}%</b>
+                                       and classified as <b>{{data['face-prediction']['emotion']}}</b>.
+                                </div>
+                            </div>
+                              <div class="col-md-5 col-sm-12 col-xs-12 ">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-primary mt-2 w-100 ">
+                                          Angry <span class="badge badge-light">{{ data['scores'][0] }}%</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary mt-2 w-100">
+                                          Disgust <span class="badge badge-light">{{ data['scores'][1] }}%</span>
+                                        </button>
+                                         <button type="button" class="btn btn-primary mt-2 w-100">
+                                          Fear <span class="badge badge-light">{{ data['scores'][2] }}%</span>
+                                        </button>
+                                     </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-primary mt-2 w-100">
+                                          Happy <span class="badge badge-light">{{ data['scores'][3] }}%</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary mt-2 w-100">
+                                          Sad <span class="badge badge-light">{{ data['scores'][4] }}%</span>
+                                        </button>
+                                         <button type="button" class="btn btn-primary mt-2 w-100">
+                                          Amaze <span class="badge badge-light">{{ data['scores'][5] }}%</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4">
+                                         <button type="button" class="btn btn-primary mt-2 w-100">
+                                          Neutral <span class="badge badge-light">{{ data['scores'][6] }}%</span>
+                                        </button>
+                                    </div>
+                                </div>
+                              </div>
+
+                        </div>
+                    </div>
+                </div>
+             {% endfor %}
+            <div class="col-md-6 col-sm-12 col-xs-12"></div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <a href="/"  class="btn btn-success float-right">Predict more image</a>
+            </div>
+        </div>
+        {% endif %}
+
+        <div>
+
+        </div>
+
+        <!------------------------------ FOOTER --------------------------------->
+        <footer id="footer">
+						<section class="footer-font">
+							<h2 class="footer-font">IndentiFeel: Face Emotion Classifier</h2>
+							<p class="footer-font">This web application is an Emotion classifier where everyone can detect what their expressions mean.</p>
+<!--							<ul class="actions">-->
+<!--								<li><a href="templates/generic.html" class="button">Learn More</a></li>-->
+<!--							</ul>-->
+						</section>
+						<section>
+							<h2 class="footer-font">Angelie Grace Pahila</h2>
+							<dl class="alt footer-font">
+								<dt class="footer-font"><em>Address</em></dt>
+								<dd class="footer-font">1234 Somewhere Road &bull; Camella Homes, Imus City, Cavite, Philippines.</dd>
+								<dt class="footer-font"><em>Phone</em></dt>
+								<dd class="footer-font">(0967)922-1234</dd>
+								<dt class="footer-font"><em>Email</em></dt>
+								<dd><a class="footer-font" href="#">pal1229@dlsud.edu.ph</a></dd>
+							</dl>
+
+						</section>
+						<p class="copyright footer-font">&copy; IdentiFeel 2022, Pahila</a>.</p>
+					</footer>
+
+
+    </div>
+
+    <!-------------------------- Inline JavaScript --------------------------------->
+<!--  <script>-->
+<!--      $("click-photo").click(function(e) {-->
+<!--    e.preventDefault();-->
+<!--    $.ajax({-->
+<!--        type: "POST",-->
+<!--        url: "/pages/test/",-->
+<!--        data: { -->
+<!--            id: $(this).val(), // < note use of 'this' here-->
+<!--            access_token: $("#access_token").val() -->
+<!--        },-->
+<!--        success: function(result) {-->
+<!--            alert('ok');-->
+<!--        },-->
+<!--        error: function(result) {-->
+<!--            alert('error');-->
+<!--        }-->
+<!--    });-->
+<!--});-->
+<!--  </script>-->
+
+
+<!--     <script>-->
+<!--         document.querySelector('.upload-input').addEventListener('change',(e)=>{-->
+<!--                btn = document.querySelector('.upload-btn')-->
+<!--                btn.innerHTML = '';-->
+<!--                btn.innerHTML = `-->
+<!--                                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>-->
+<!--                                          <span class="sr-only">Loading...</span>-->
+<!--                `;-->
+<!--                setTimeout(()=>{-->
+<!--                    btn.form.submit();-->
+<!--                },3000);-->
+<!--         });-->
+<!--         document.querySelector('.predict-btn').addEventListener('click',(e)=>{-->
+<!--            e.preventDefault();-->
+<!--            console.log(e)-->
+<!--            e.target.innerHTML = '';-->
+<!--            e.target.innerHTML = `-->
+<!--                                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>-->
+<!--                                          <span class="sr-only">Loading...</span>-->
+<!--            `;-->
+<!--            setTimeout(()=>{-->
+<!--                    e.target.form.submit();-->
+<!--            },1000);-->
+
+<!--         });-->
+
+     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="static/js/script.js"></script>
+</body>
+</html>
