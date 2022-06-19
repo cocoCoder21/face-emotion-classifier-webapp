@@ -11,6 +11,7 @@ IdentiFeel can able to determine different emotions such as happy, sad, angry, n
 
 
 What is Face Emotion Recognition (FER)?
+
 Facial Emotion Recognition (FER) is the technology that analyses facial expressions from both static images and videos in order to reveal information on one's emotional state. Examining a person's face, unless they actively suppress their expressions, can be one method of effectively discerning their genuine mood and reactions. Because of the universality of these expressions, facial emotion recognition is a task that computers can also perform.
 
 
